@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\{Job, Tag};
 use App\Http\Requests\StoreJobRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class JobController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         $jobs = Job::query()
             ->latest()
@@ -22,16 +24,16 @@ class JobController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(): View
     {
         return view('jobs.create');
     }
 
-    public function store(StoreJobRequest $request)
+    public function store(StoreJobRequest $request): RedirectResponse
     {
         $attributes = $request->validated();
 
-        $attributes['featured'] = $request->has('featured');
+        $attributes['featured'] = $request->boolean('featured');
 
         $job = Auth::user()->employer->jobs()->create(Arr::except($attributes, 'tags'));
 
@@ -42,12 +44,13 @@ class JobController extends Controller
 
     private function attachTags(Job $job, ?string $tags): void
     {
-        if (! $tags) {
+        if (!$tags) {
             return;
         }
 
-        foreach(explode(',', $tags) as $tag) {
-            $job->tag(trim($tag));
-        }
+        collect(explode(',', $tags))
+            ->map(fn($tag) => trim($tag))
+            ->filter()
+            ->each(fn($tag) => $job->tag($tag));
     }
 }

@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Job;
-use App\Models\Tag;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\{Job, Tag};
 use Illuminate\Database\Seeder;
 
 class JobSeeder extends Seeder

@@ -30,6 +30,11 @@ class JobController extends Controller
         return view('jobs.create');
     }
 
+    public function show(Job $job): View
+    {
+        return view('jobs.show', ['job' => $job]);
+    }
+
     public function store(StoreJobRequest $request): RedirectResponse
     {
         $attributes = $request->validated();
@@ -43,11 +48,6 @@ class JobController extends Controller
         $this->attachTags($job, $attributes['tags'] ?? null);
 
         return redirect()->route('jobs.index');
-    }
-
-    public function show(Job $job): View
-    {
-        return view('jobs.show', ['job' => $job]);
     }
 
     private function attachTags(Job $job, ?string $tags): void

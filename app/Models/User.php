@@ -37,4 +37,16 @@ class User extends Authenticatable
     {
         return $this->hasOne(Employer::class);
     }
+
+    public function isEmployer(): bool
+    {
+        return $this->employer()->exists();
+    }
+
+    public function ownsJob(Job $job): bool
+    {
+        return $this->employer()
+            ->whereKey($job->employer_id)
+            ->exists();
+    }
 }

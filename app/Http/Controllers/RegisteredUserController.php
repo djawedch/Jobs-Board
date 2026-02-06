@@ -17,22 +17,26 @@ class RegisteredUserController extends Controller
 
     public function store(RegisterUserRequest $request): RedirectResponse
     {
-        $user = DB::transaction(function () use ($request) 
-        {
+        $user = DB::transaction(function () use ($request) {
             $validated = $request->validated();
 
             $user = User::create([
                 'name' => $validated['name'],
                 'email' => $validated['email'],
                 'password' => $validated['password'],
+                'role' => $validated['role'],
             ]);
 
-            $logoPath = $request->file('logo')->store('logos');
+            if ($validated['role'] === 'employer') {
+                $logoPath = $request->file('logo') 
+                    ? $request->file('logo')->store('logos') 
+                    : null;
 
-            $user->employer()->create([
-                'name' => $validated['employer'],
-                'logo' => $logoPath,
-            ]);
+                $user->employer()->create([
+                    'name' => $validated['employer'],
+                    'logo' => $logoPath,
+                ]);
+            }
 
             return $user;
         });

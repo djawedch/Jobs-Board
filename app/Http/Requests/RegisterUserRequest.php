@@ -18,9 +18,10 @@ class RegisterUserRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'confirmed', Password::min(6)],
+            'role' => ['required', 'in:candidate,employer'],
 
-            'employer' => ['required', 'string', 'max:255'],
-            'logo' => ['required', 'image', 'max:2048'],
+            'employer' => ['required_if:role,employer', 'nullable', 'string', 'max:255'],
+            'logo' => ['nullable', 'image', 'max:2048'],
         ];
     }
 }

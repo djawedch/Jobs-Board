@@ -38,7 +38,7 @@ class JobController extends Controller
     public function store(StoreJobRequest $request): RedirectResponse
     {
         $attributes = $request->validated();
-        
+
         $employer = $request->user()->employer;
 
         $job = $employer->jobs()->create(
@@ -46,6 +46,33 @@ class JobController extends Controller
         );
 
         $this->attachTags($job, $attributes['tags'] ?? null);
+
+        return redirect()->route('jobs.index');
+    }
+
+    public function edit(Job $job): View
+    {
+        return view('jobs.edit', ['job' => $job]);
+    }
+
+    public function update(StoreJobRequest $request, Job $job): RedirectResponse
+    {
+        $this->authorize('update', $job);
+
+        $attributes = $request->validated();
+
+        $job->update(Arr::except($attributes, 'tags'));
+
+        $this->syncTags($job, $attributes['tags'] ?? null);
+
+        return redirect()->route('jobs.show', $job);
+    }
+
+    public function destroy(Job $job)
+    {
+        $this->authorize('delete', $job);
+
+        $job->delete();
 
         return redirect()->route('jobs.index');
     }
@@ -60,5 +87,20 @@ class JobController extends Controller
             ->map(fn($tag) => trim($tag))
             ->filter()
             ->each(fn($tag) => $job->tag($tag));
+    }
+
+    private function syncTags(Job $job, ?string $tags): void
+    {
+        if (!$tags) {
+            $job->tags()->detach();
+            return;
+        }
+
+        $tagIds = collect(explode(',', $tags))
+            ->map(fn($tag) => trim($tag))
+            ->filter()
+            ->map(fn($tag) => Tag::firstOrCreate(['name' => $tag])->id);
+
+        $job->tags()->sync($tagIds);
     }
 }

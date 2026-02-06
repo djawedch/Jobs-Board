@@ -5,12 +5,14 @@ use App\Http\Controllers\{JobController, SessionController, RegisteredUserContro
 
 Route::get('/', [JobController::class, 'index'])->name('jobs.index');
 
-Route::middleware('auth')->group(function () 
-{
+Route::middleware('auth')->group(function () {
     Route::prefix('jobs')->controller(JobController::class)->group(function () {
         Route::get('/create', 'create')->name('jobs.create');
         Route::post('/', 'store')->name('jobs.store');
+        Route::get('/{job}/edit', 'edit')->name('jobs.edit');
+        Route::patch('/{job}', 'update')->name('jobs.update');
         Route::get('/{job}', 'show')->name('jobs.show');
+        Route::delete('/{job}', 'destroy')->name('jobs.destroy');
     });
 
     Route::controller(SessionController::class)->group(function () {
@@ -18,8 +20,7 @@ Route::middleware('auth')->group(function ()
     });
 });
 
-Route::middleware('guest')->group(function () 
-{
+Route::middleware('guest')->group(function () {
     Route::controller(RegisteredUserController::class)->group(function () {
         Route::get('/register', 'create')->name('register');
         Route::post('/register', 'store')->name('register.store');

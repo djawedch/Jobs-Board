@@ -33,9 +33,7 @@ class JobController extends Controller
     public function store(StoreJobRequest $request): RedirectResponse
     {
         $attributes = $request->validated();
-
-        $attributes['featured'] = $request->boolean('featured');
-
+        
         $employer = $request->user()->employer;
 
         $job = $employer->jobs()->create(

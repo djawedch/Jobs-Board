@@ -15,8 +15,6 @@ class Job extends Model
         'salary',
         'location',
         'schedule',
-        'url',
-        'featured',
         'employer_id',
     ];
 
@@ -26,7 +24,6 @@ class Job extends Model
     ];
 
     protected $casts = [
-        'featured' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

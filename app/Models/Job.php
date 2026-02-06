@@ -45,4 +45,17 @@ class Job extends Model
         return $this->belongsTo(Employer::class);
     }
 
+    protected static function booted()
+    {
+        static::deleting(function ($job) {
+            $tags = $job->tags;
+            $job->tags()->detach();
+
+            foreach ($tags as $tag) {
+                if ($tag->jobs()->count() === 0) {
+                    $tag->delete();
+                }
+            }
+        });
+    }
 }

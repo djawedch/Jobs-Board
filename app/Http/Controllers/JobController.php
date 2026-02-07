@@ -7,10 +7,11 @@ use App\Http\Requests\StoreJobRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\View\View;
+use App\Services\TagService;
 
 class JobController extends Controller
 {
-    public function __construct()
+    public function __construct(private TagService $tagService)
     {
         $this->authorizeResource(Job::class, 'job');
     }
@@ -48,7 +49,7 @@ class JobController extends Controller
             Arr::except($attributes, 'tags')
         );
 
-        $this->attachTags($job, $attributes['tags'] ?? null);
+        $this->tagService->attachTags($job, $attributes['tags'] ?? null);
 
         return redirect()->route('jobs.index');
     }
@@ -64,7 +65,7 @@ class JobController extends Controller
 
         $job->update(Arr::except($attributes, 'tags'));
 
-        $this->syncTags($job, $attributes['tags'] ?? null);
+        $this->tagService->syncTags($job, $attributes['tags'] ?? null);
 
         return redirect()->route('jobs.show', $job);
     }
@@ -74,32 +75,5 @@ class JobController extends Controller
         $job->delete();
 
         return redirect()->route('jobs.index');
-    }
-
-    private function attachTags(Job $job, ?string $tags): void
-    {
-        if (!$tags) {
-            return;
-        }
-
-        collect(explode(',', $tags))
-            ->map(fn($tag) => trim($tag))
-            ->filter()
-            ->each(fn($tag) => $job->tag($tag));
-    }
-
-    private function syncTags(Job $job, ?string $tags): void
-    {
-        if (!$tags) {
-            $job->tags()->detach();
-            return;
-        }
-
-        $tagIds = collect(explode(',', $tags))
-            ->map(fn($tag) => trim($tag))
-            ->filter()
-            ->map(fn($tag) => Tag::firstOrCreate(['name' => $tag])->id);
-
-        $job->tags()->sync($tagIds);
     }
 }

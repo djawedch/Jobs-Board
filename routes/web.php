@@ -9,7 +9,6 @@ Route::controller(JobController::class)->group(function () {
 });
 
 Route::get('/search', SearchController::class)->name('search');
-Route::get('/tags/{tag:name}', TagController::class)->name('tags.show');
 
 Route::middleware('guest')->group(function () {
     Route::controller(RegisteredUserController::class)->group(function () {

@@ -29,7 +29,7 @@ class RegisteredUserController extends Controller
 
             if ($validated['role'] === 'employer') {
                 $logoPath = $request->file('logo') 
-                    ? $request->file('logo')->store('logos') 
+                    ? $request->file('logo')->store('logos', 'public') 
                     : null;
 
                 $user->employer()->create([

@@ -21,7 +21,16 @@ class RegisterUserRequest extends FormRequest
             'role' => ['required', 'in:candidate,employer'],
 
             'employer' => ['required_if:role,employer', 'nullable', 'string', 'max:255'],
-            'logo' => ['nullable', 'image', 'max:2048'],
+            'logo' => ['required_if:role,employer', 'image', 'max:2048'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'logo.required_if' => 'The company logo is required when registering as an employer.',
+            'logo.image' => 'The logo must be an image file.',
+            'logo.max' => 'The logo must not exceed 2MB in size.',
         ];
     }
 }

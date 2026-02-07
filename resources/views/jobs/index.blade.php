@@ -16,6 +16,10 @@
                     <x-job-card :$job></x-job-card>
                 @endforeach
             </div>
+
+            <div class="mt-8">
+                {{ $jobs->links() }}
+            </div>
         </section>
 
         <section>

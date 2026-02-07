@@ -20,7 +20,7 @@ class JobController extends Controller
         $jobs = Job::query()
             ->latest()
             ->with(['employer', 'tags'])
-            ->get();
+            ->simplePaginate(9);
 
         return view('jobs.index', [
             'jobs' => $jobs,

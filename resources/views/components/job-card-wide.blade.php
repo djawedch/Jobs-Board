@@ -13,7 +13,7 @@
                 {{ $job->title }}
             </h3>
 
-            <p class="text-sm text-gray-400 mt-auto">{{ $job->salary }}</p>
+            <p class="text-sm text-gray-400 mt-auto">${{ number_format((float)$job->salary, 0, '.', ',') }} USD</p>
         </a>
     </div>
 

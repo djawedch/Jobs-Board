@@ -2,9 +2,9 @@
     <x-page-heading>New Job</x-page-heading>
     
     <x-forms.form method="POST" action="/jobs">
-        <x-forms.input label="Title" name="title" placeholder="CEO" />
-        <x-forms.input label="Salary" name="salary" placeholder="$90,000 USD" />
-        <x-forms.input label="Location" name="location" placeholder="Winter Park, Florida" />
+        <x-forms.input label="Title" name="title" placeholder="Web Developer" />
+        <x-forms.input label="Salary" name="salary" placeholder="xxxxx" />
+        <x-forms.input label="Location" name="location" placeholder="Florida" />
 
         <x-forms.select label="Schedule" name="schedule">
             <option>Part Time</option>
@@ -13,7 +13,7 @@
 
         <x-forms.divider />
 
-        <x-forms.input label="Tags (comma separated)" name="tags" placeholder="laracasts, video, education" />
+        <x-forms.input label="Tags (comma separated)" name="tags" placeholder="frontend, backend, database" />
 
         <x-forms.button>Publish</x-forms.button>
     </x-forms.form>

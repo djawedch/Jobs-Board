@@ -14,11 +14,11 @@ class SearchController extends Controller
             'q' => 'required|string|min:2|max:100',
         ], [
             'q.required' => 'Please enter a job title, or tag name to search.',
-            'q.min' => 'Search term must be at least 2 character.',
+            'q.min' => 'Search term must be at least 2 characters.',
             'q.max' => 'Search term is too long (maximum 100 characters).',
         ]);
 
-        $searchTerm = $request->input('q');
+        $searchTerm = trim($request->input('q'));
 
         $jobs = Job::query()
             ->with(['employer', 'tags'])
@@ -33,6 +33,9 @@ class SearchController extends Controller
 
         $jobs->appends(['q' => $searchTerm]);
 
-        return view('results', compact('jobs'));
+        return view('results', [
+            'jobs' => $jobs,
+            'searchTerm' => $searchTerm, // Add this
+        ]);
     }
 }

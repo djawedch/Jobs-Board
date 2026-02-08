@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SearchRequest;
-use App\Models\{Job};
+use App\Models\Job;
 use Illuminate\View\View;
 
 class SearchController extends Controller

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoginUserRequest;
+use App\Http\Requests\LoginRequest;
 use Illuminate\View\View;
 use Illuminate\Http\{RedirectResponse, Request};
 use Illuminate\Support\Facades\Auth;
@@ -15,12 +15,12 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    public function store(LoginUserRequest $request): RedirectResponse
+    public function store(LoginRequest $request): RedirectResponse
     {
         if (!Auth::attempt($request->validated())) {
-            throw ValidationException::withMessages([
-                'email' => 'Sorry, those credentials do not match',
-            ]);
+            return back()
+                ->with('error', 'Sorry, those credentials do not match.')
+                ->withInput($request->only('email'));
         }
 
         $request->session()->regenerate();

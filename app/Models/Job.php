@@ -45,6 +45,15 @@ class Job extends Model
         return $this->belongsTo(Employer::class);
     }
 
+    public function getFormattedSalaryAttribute(): string
+    {
+        if (is_numeric($this->salary)) {
+            return '$' . number_format((float) $this->salary, 0, '.', ',') . ' USD';
+        }
+
+        return $this->salary;
+    }
+
     protected static function booted()
     {
         static::deleting(function ($job) {

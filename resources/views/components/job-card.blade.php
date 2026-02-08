@@ -9,7 +9,7 @@
                 {{ $job->title }}
             </h3>
 
-            <p class="text-sm mt-4">${{ number_format((float)$job->salary, 0, '.', ',') }} USD</p>
+            <p class="text-sm mt-4">{{ $job->formatted_salary }}</p>
         </div>
 
         <div class="flex justify-between items-center mt-auto">

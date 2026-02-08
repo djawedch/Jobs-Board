@@ -2,23 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchRequest;
 use App\Models\{Job};
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class SearchController extends Controller
 {
-    public function __invoke(Request $request): View
+    public function __invoke(SearchRequest $request): View
     {
-        $request->validate([
-            'q' => 'required|string|min:2|max:100',
-        ], [
-            'q.required' => 'Please enter a job title, or tag name to search.',
-            'q.min' => 'Search term must be at least 2 characters.',
-            'q.max' => 'Search term is too long (maximum 100 characters).',
-        ]);
-
-        $searchTerm = trim($request->input('q'));
+        $searchTerm = $request->validated('q');
 
         $jobs = Job::query()
             ->with(['employer', 'tags'])
@@ -35,7 +27,7 @@ class SearchController extends Controller
 
         return view('results', [
             'jobs' => $jobs,
-            'searchTerm' => $searchTerm, // Add this
+            'searchTerm' => $searchTerm,
         ]);
     }
 }

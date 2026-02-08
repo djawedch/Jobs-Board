@@ -17,8 +17,7 @@ class SessionController extends Controller
 
     public function store(LoginUserRequest $request): RedirectResponse
     {
-        if (!Auth::attempt($request->validated())) 
-        {
+        if (!Auth::attempt($request->validated())) {
             throw ValidationException::withMessages([
                 'email' => 'Sorry, those credentials do not match',
             ]);
@@ -26,7 +25,10 @@ class SessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->route('jobs.index');
+        return redirect()
+            ->route('jobs.index')
+            ->with('success', 'Welcome back!');
+        ;
     }
 
     public function destroy(Request $request): RedirectResponse
@@ -36,6 +38,8 @@ class SessionController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('jobs.index');
+        return redirect()
+            ->route('jobs.index')
+            ->with('success', 'You have been logged out.');
     }
 }

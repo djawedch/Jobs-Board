@@ -1,60 +1,176 @@
-# Laravel Jobs Board (Refactored)
+# Jobs-Board
 
-This repository contains a refactored version of the **Laravel Jobs Board** application originally built while following **Jeffrey Way’s Laracasts course** on Laravel.  
-The goal of this refactor is to apply best practices, improve structure, and prepare this project for professional review.
+A full-featured job board platform built with Laravel where employers can post job listings and candidates can browse opportunities. This project evolved from a basic tutorial into a robust, production-ready application with advanced features and a clean component-based architecture.
+
+## Features
+
+### Implemented
+
+- **Custom Authentication System**: Register, login, logout with session management
+- **Dual Role System**: Separate flows for Employers and Candidates
+- **Job Management**: Full CRUD operations for job listings
+- **Dynamic Forms**: Conditional employer fields during registration
+- **File Upload**: Company logo upload
+- **Search Functionality**: Job search across titles and tags
+- **Responsive UI**: Mobile-first design with Tailwind CSS
+- **Flash Notifications**: User-friendly success/error messages
+- **Blade Components**: Modular, reusable UI components
+
+### Planned Features
+
+- Job application system
+- User profile management
+- Advanced filtering (salary, location, job type)
+- Email notifications
+- Job favoriting/bookmarking
+- Admin dashboard
+
+## Tech Stack
+
+**Backend:**
+
+- Laravel 12.47.0
+- PHP
+- MySQL
+
+**Frontend:**
+
+- Blade Templates
+- Tailwind CSS
+- Vite
+
+**Architecture:**
+
+- Service Layer Pattern
+- Component-Based Design
+- Custom Authentication
+
+## Quick Start
+
+### Prerequisites
+
+- PHP
+- Composer
+- Node.js & npm
+- MySQL
+
+### Installation
+
+1. **Clone the repository:**
+    
+    ```bash
+    git clone <https://github.com/djawedch/Jobs-Board.git>
+    cd Jobs-Board
+    ```
+    
+2. **Install PHP dependencies:**
+    
+    ```bash
+    composer install
+    ```
+    
+3. **Setup environment:**
+    
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
+    
+4. **Configure database in `.env`:**
+    
+    ```
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=jobs_board
+    DB_USERNAME=root
+    DB_PASSWORD=
+    ```
+    
+5. **Run migrations & seeders:**
+    
+    ```bash
+    php artisan migrate
+    php artisan db:seed
+    ```
+    
+6. **Install frontend dependencies:**
+    
+    ```bash
+    npm install
+    ```
+    
+7. **Start development servers:**
+    
+    ```bash
+    npm run dev | php artisan serve
+    ```
+    
+8. **Visit `http://localhost:8000`** in your browser
+
+## **Key Implementation Details**
+
+### **Authentication System**
+
+- Custom authentication without Breeze/Jetstream
+- Session-based authentication
+- Role-based middleware protection
+- Separate registration flows for employers/candidates
+
+### **Job Management**
+
+- RESTful resource controllers
+- Policy protection for edit/delete operations
+- Search functionality
+
+### **File Handling**
+
+- Company logo upload with validation
+- Public disk storage
+- Intelligent placeholder system for seeders
+- Image optimization and validation
+
+### **UI/UX Features**
+
+- Responsive design with Tailwind CSS
+- Flash message system with auto-dismiss
+- Conditional form sections
+- Accessible form elements
+- Consistent spacing and typography
+
+## **Development Notes**
+
+### **Database Seeding**
+
+The seeder includes:
+
+- Sample employers and candidates
+- Job listings with realistic data
+- Company logos
+
+## **Learning Journey**
+
+This project started as a tutorial from **Jeffrey Way's Laravel course** but was significantly expanded with:
+
+- Custom authentication system
+- Advanced role management
+- Service layer implementation
+- Component-based architecture
+- Production-ready features
+
+## **Acknowledgments**
+
+- **Jeffrey Way** for the initial tutorial foundation
+- **Laravel Community** for excellent documentation
+- **Tailwind CSS** for the utility-first approach
+- **All open-source contributors** whose packages made this possible
+
+## **License**
+
+This project is open-source and available for educational purposes. Originally based on Jeffrey Way's tutorial but extensively modified and expanded.
 
 ---
 
-## 🚀 About
+## **Final Notes**
 
-The Jobs Board is a simple job portal application where:
-- Employers can post job listings
-- Users can view and search job listings
-- Basic user authentication is implemented
-
-This project is intended as an **educational exercise** in Laravel development and project design.
-
----
-
-## 📦 Features (Original Scaffold)
-
-- Laravel authentication
-- Job listings CRUD (create, read, update, delete)
-- Blade templating
-- Basic routing and controllers
-- Migration and seeders
-
----
-
-## 🧰 Tech Stack
-
-- **Framework:** Laravel (PHP)
-- **Templating:** Blade
-- **CSS:** Tailwind
-- **Database:** MySQL
-
----
-
-## 🛠 Setup
-
-1. Clone this repository  
-   `git clone https://github.com/djawedch/Jobs-Board-Application-Laravel-Learning-Project-.git`
-2. Install PHP dependencies  
-   `composer install`
-3. Copy `.env.example` → `.env`  
-   `cp .env.example .env`
-4. Generate app key  
-   `php artisan key:generate`
-5. Set up database and run migrations  
-   `php artisan migrate --seed`
-6. Start the app  
-   `php artisan serve`
-
----
-
-## 📜 License
-
-This project uses the MIT license.
-
----
-
+This project represents a significant learning milestone in Laravel development. From basic CRUD operations to implementing a service layer and component architecture, it showcases progression from tutorial-based learning to building production-ready features.

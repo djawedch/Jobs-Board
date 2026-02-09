@@ -17,6 +17,5 @@
         <x-forms.input label="Tags (comma separated)" name="tags" :value="old('tags', $job->tags->pluck('name')->join(', '))" />
 
         <x-forms.button>Update Job</x-forms.button>
-
     </x-forms.form>
 </x-layout>

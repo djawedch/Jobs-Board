@@ -8,7 +8,6 @@
     </div>
 
     <div class="mt-8 flex items-center justify-between">
-
         @can('delete', $job)
             <form method="POST" action="{{ route('jobs.destroy', $job) }}" onsubmit="return confirm('Delete this job?');">
                 @csrf
@@ -32,6 +31,5 @@
                 </a>
             @endcan
         </div>
-
     </div>
 </x-layout>

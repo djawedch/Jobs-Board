@@ -4,6 +4,8 @@ import.meta.glob([
     '../images/**'
 ]);
 
+// Handles role selection UI: shows employer-specific input fields only when the "employer" radio button is selected, and keeps the form state correct on page load and when the user switches roles.
+
 document.addEventListener("DOMContentLoaded", function () {
     const candidateRadio = document.getElementById("candidate");
     const employerRadio = document.getElementById("employer");
@@ -11,9 +13,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function toggleEmployerFields() {
         if (employerRadio.checked) {
-            employerFields.style.display = "block";
+            employerFields.classList.remove('hidden');
+            employerFields.classList.add('block');
         } else {
-            employerFields.style.display = "none";
+            employerFields.classList.add('hidden');
+            employerFields.classList.remove('block');
         }
     }
 
@@ -23,9 +27,11 @@ document.addEventListener("DOMContentLoaded", function () {
     employerRadio.addEventListener("change", toggleEmployerFields);
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+// Controls flash message lifecycle: automatically fades out notification banners after 5 seconds and removes them from the DOM to avoid persistent clutter.
+
+document.addEventListener('DOMContentLoaded', function () {
     const flashMessages = document.querySelectorAll('.fixed.top-4');
-    
+
     flashMessages.forEach(message => {
         setTimeout(() => {
             message.style.opacity = '0';

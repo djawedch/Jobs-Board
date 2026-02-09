@@ -2,10 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Employer;
-use App\Models\Job;
-use App\Models\Tag;
-use App\Models\User;
+use App\Models\{User, Employer, Job, Tag};
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,7 +12,6 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        // Create all unique tags FIRST
         $tagNames = ['PHP', 'Laravel', 'JavaScript', 'Vue.js', 'React', 'Node.js', 'Python', 'DevOps', 'Frontend', 'Backend'];
         
         $tags = collect();

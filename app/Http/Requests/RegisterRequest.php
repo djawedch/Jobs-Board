@@ -41,7 +41,7 @@ class RegisterRequest extends FormRequest
             'role.required' => 'Please select a role.',
             'role.in' => 'Please select either Candidate or Employer.',
 
-            'employer.required_if' => 'Company name is required for employers.',
+            'employer.required_if' => 'The company name is required for employers.',
             'employer.max' => 'Company name must not exceed 255 characters.',
             'employer.unique' => 'This company name is already registered.',
 

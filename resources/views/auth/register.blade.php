@@ -1,34 +1,24 @@
 <x-layout>
     <x-page-heading>Register</x-page-heading>
 
-    <x-forms.form method="POST" action="/register" enctype="multipart/form-data">
+    <x-forms.form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
         <x-forms.input label="Name" name="name" />
         <x-forms.input label="Email" name="email" type="email" />
         <x-forms.input label="Password" name="password" type="password" />
         <x-forms.input label="Password Confirmation" name="password_confirmation" type="password" />
 
-        <x-forms.form-group>
-            <x-forms.label name="role" label="Register as:" />
-            <div class="flex items-center gap-x-6">
-                <div class="flex items-center gap-x-2">
-                    <input type="radio" id="candidate" name="role" value="candidate" checked
-                        class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                    <label for="candidate" class="block text-sm font-medium leading-6 text-white">Candidate</label>
-                </div>
-                <div class="flex items-center gap-x-2">
-                    <input type="radio" id="employer" name="role" value="employer"
-                        class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                    <label for="employer" class="block text-sm font-medium leading-6 text-white">Employer</label>
-                </div>
-            </div>
-        </x-forms.form-group>
+        <x-forms.radio-group />
 
-        <div id="employerFields" style="display: none;" class="space-y-6 mt-6">
+        <div id="employerFields" class="space-y-6 mt-6 hidden">
             <x-forms.divider />
-            <x-forms.input label="Employer Name" name="employer" />
-            <x-forms.input label="Employer Logo" name="logo" type="file" />
+            <x-forms.input label="Company Name" name="employer" />
+            <x-forms.input label="Company Logo" name="logo" type="file" />
         </div>
 
-        <x-forms.button>Create Account</x-forms.button>
+        <x-forms.button class="w-full justify-center mt-6">Create Account</x-forms.button>
+
+        <x-forms.auth-link href="{{ route('login') }}" linkText="Log in here">
+            Already have an account?
+        </x-forms.auth-link>
     </x-forms.form>
 </x-layout>
